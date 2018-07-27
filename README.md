@@ -12,11 +12,19 @@ pip install -r requirements.txt
 
 
 # Running the MNIST example
-this currently runs the mnist gan example as laid out in https://medium.com/ai-society/gans-from-scratch-1-a-deep-introduction-with-code-in-pytorch-and-tensorflow-cb03cdcdba0f
+if you would like to explore the MNIST linear GAN example as laid out in https://medium.com/ai-society/gans-from-scratch-1-a-deep-introduction-with-code-in-pytorch-and-tensorflow-cb03cdcdba0f
 
 the program is run via
 ```
-python gan.py
+python lgan.py
+```
+
+# Running the CIFAR10 example
+included is a working example of deep convolutional GANs on the CIFAR10 dataset as laid out in https://github.com/diegoalejogm/gans
+
+the program is run via
+```
+python dcgan.py
 ```
 
 # Visualizing the progress of the algorithm
