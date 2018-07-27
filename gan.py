@@ -77,3 +77,5 @@ def train():
                 logger.log_images(test_images, num_test_samples, epoch, n_batch, num_batches)
                 logger.display_status(epoch, num_epochs, n_batch, num_batches, d_error, g_error, d_pred_real, d_pred_fake)
 
+if __name__ == "__main__":
+    train()
