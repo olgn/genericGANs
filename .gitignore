@@ -1,1 +1,8 @@
 .env/
+dataset/
+runs/
+data/
+.ipynb_checkpoints/
+.vscode/
+Untitled.ipynb
+__pycache__/
