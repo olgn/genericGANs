@@ -36,6 +36,11 @@ d_optimizer = linear_adam_optimizer(discriminator.parameters(), 0.0002)
 generator = AudioGenerator(sample_size)
 g_optimizer = linear_adam_optimizer(generator.parameters(), 0.0002)
 
+# convert to gpu if available
+if torch.cuda.is_available():
+    generator.cuda()
+    discriminator.cuda()
+
 # create loss function
 loss = nn.BCELoss()
 
@@ -55,6 +60,7 @@ def train():
             # TRAIN DISCRIMINATOR
             # generate real data from data loader
             real_data = Variable(real_batch.view(real_batch.size(0), sample_size))
+            if torch.cuda.is_available(): real_data = real_data.cuda()
 
             # generate fake data and detach gradient
             fake_data = generator(data.noise(N)).detach()

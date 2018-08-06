@@ -78,6 +78,7 @@ def noise(size, sample_size=100):
     Generates a 1-d vector of gaussian noise
     """
     n = Variable(torch.randn(size, sample_size))
+    if torch.cuda.is_available(): return n.cuda()
     return n
 
 def ones_target(size):
@@ -85,6 +86,7 @@ def ones_target(size):
     Tensor containing ones, with shape = size
     """
     data = Variable(torch.ones(size, 1))
+    if torch.cuda.is_available(): return data.cuda()
     return data
 
 def zeros_target(size):
@@ -92,4 +94,5 @@ def zeros_target(size):
     Tensor containing zeros, with shape = size
     """
     data = Variable(torch.zeros(size, 1))
+    if torch.cuda.is_available(): return data.cuda()
     return data

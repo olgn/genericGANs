@@ -35,6 +35,11 @@ d_optimizer = linear_adam_optimizer(discriminator.parameters(), 0.0002)
 generator = LinearGenerator()
 g_optimizer = linear_adam_optimizer(generator.parameters(), 0.0002)
 
+# convert to gpu if available
+if torch.cuda.is_available():
+    generator.cuda()
+    discriminator.cuda()
+
 # create loss function
 loss = nn.BCELoss()
 
@@ -53,6 +58,7 @@ def train():
             # TRAIN DISCRIMINATOR
             # generate real data from data loader
             real_data = Variable(data.images_to_vectors(real_batch, 784))
+            if torch.cuda.is_available(): real_data = real_data.cuda()
 
             # generate fake data and detach gradient
             fake_data = generator(data.noise(N)).detach()
