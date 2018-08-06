@@ -1,6 +1,7 @@
 import torch
 from torch.autograd.variable import Variable
 from torchvision import transforms, datasets
+import torchaudio
 
 # MNIST data import function.
 # transforms data to tensor, then normalize to
@@ -37,10 +38,25 @@ def cifar_data():
     return data
 
 
+# VCTK dataset
+def vctk_data(max_len=16000):
+    compose = torchaudio.transforms.Compose(
+        [
+            # transforms.ToTensor(),
+            torchaudio.transforms.Scale(),
+            torchaudio.transforms.DownmixMono(),
+            torchaudio.transforms.PadTrim(max_len=max_len),
+            # transforms.Normalize((.5, .5, .5), (.5, .5, .5))
+        ]
+    )
+    out_dir = './dataset'
+    data = torchaudio.datasets.VCTK(root=out_dir, transform=compose, download=True)
+    return data
+
 # Creates the DataLoader that will generate data from the ./dataset folder
-def get_data_loader(data):
+def get_data_loader(data, batch_size=100):
     # Create loader with data
-    data_loader = torch.utils.data.DataLoader(data, batch_size=100, shuffle=True)
+    data_loader = torch.utils.data.DataLoader(data, batch_size=batch_size, shuffle=True)
 
     return data_loader
 
@@ -57,11 +73,11 @@ def images_to_vectors(images, size):
 def vectors_to_images(vectors):
     return vectors.view(vectors.size(0), 1, 28, 28)
 
-def noise(size):
+def noise(size, sample_size=100):
     """
     Generates a 1-d vector of gaussian noise
     """
-    n = Variable(torch.randn(size, 100))
+    n = Variable(torch.randn(size, sample_size))
     return n
 
 def ones_target(size):
